@@ -8,7 +8,7 @@ urlpatterns = [
     path('horse/create/', views.Create_Horse.as_view(), name='create_horse'),
     path('horse/<int:horse_id>/update/', views.Update_Horse.as_view(), name='update_horse'),
     path('horse/<int:horse_id>/delete/', views.Delete_Horse.as_view(), name='delete_horse'),
-    # path('horse/<int:horse_id>/add_a_feeding', views.add_feeding, name='add_a_feeding')
+    path('horse/<int:horse_id>/add_a_feeding', views.add_a_feeding, name='add_a_feeding'),
     # path('horse/<int:horse_id>/remove_feeding', )
-    # path('accounts/signup/', views.signup, name='signup'),
+    path('accounts/signup/', views.signup, name='signup'),
 ]

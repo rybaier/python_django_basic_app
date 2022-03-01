@@ -15,6 +15,8 @@ from django.contrib.auth.models import User
 class Horse(models.Model):
     name = models.CharField(max_length=100)
     age = models.IntegerField()
+    breed = models.CharField(max_length=100, default='breed unknown')
+    markings = models.CharField(max_length=300, default='no visible markings')
     weight = models.CharField(max_length=20)
     height = models.CharField(max_length=30)
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='owner')

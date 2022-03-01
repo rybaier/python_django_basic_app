@@ -19,12 +19,9 @@
                     <li><a href="{% url 'home' %}" class="left brand-logo">&nbsp;&nbsp;Equine Feed Tracker</a></li>
                 </ul>
                 <ul class="right">
-                    <li><a href="{% url 'about' %}">About</a></li>
                     {% if user.is_authenticated %}
-                      <li><a href="{% url 'create_feed' %}">Add a Feeding</a></li>
-                      <li><a href="{% url 'feed_index' %}">View All Feeds</a></li>
                       <li><a href="{% url 'create_horse' %}">Add a Horse</a></li>
-                      <li><a href="{% url 'index' %}">View All My Horses</a></li>
+                      <li><a href="{% url 'horse_list' %}">View All My Horses</a></li>
                       <li><a href="{% url 'logout' %}">Log Out</a></li>
                     {% else %}
                       <li><a href="{% url 'login' %}">Log In</a></li>

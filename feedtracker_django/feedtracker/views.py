@@ -15,35 +15,38 @@ from .forms import FeedingForm, HorseForm
 def home(request):
     return render(request, 'home.html')
 
-@login_required
+
 def horse_index(request):
     horses = Horse.objects.all()
-    return render(request, 'horse_list.html')
+    return render(request, 'horses/horse_list.html')
     
-@login_required
+
 def horse_detail(request, horse_id):
     horse = Horse.objects.get(id=horse_id)
     feedings = Feeding.objects.all()
 
     
-@login_required
+
 def add_a_feeding(request, horse_id):
     form = FeedingForm(request.POST)
     if form.is_valid():
         add_feeding = form.save(commit=False)
         add_feeding = add_feeding.horse_id
         add_feeding.save()
-    return redirect('horse_detail', horse_id=horse_id)
+    return redirect('horses/horse_detail', horse_id=horse_id)
 
 
 #class based views
 class Create_Horse(LoginRequiredMixin, CreateView):
     model = Horse
-    fields = ['name', 'age', 'weight', 'height']
+    fields = ['name', 'age', 'breed', 'weight', 'height']
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
 
 class Update_Horse(LoginRequiredMixin, UpdateView):
     model = Horse
-    fields = ['name', 'age', 'weight', 'height']
+    fields = ['name', 'age', 'breed','weight', 'height']
 
 class Delete_Horse(LoginRequiredMixin, DeleteView):
     model = Horse
@@ -56,3 +59,23 @@ class Update_Feeding(LoginRequiredMixin, UpdateView):
 class Delete_Feeding(LoginRequiredMixin, DeleteView):
      model = Feeding
      success_url = 'horse/<int:horse_id>/'
+
+
+def signup(request):
+  error_message = ''
+  if request.method == 'POST':
+    # This is how to create a 'user' form object
+    # that includes the data from the browser
+    form = UserCreationForm(request.POST)
+    if form.is_valid():
+      # This will add the user to the database
+      user = form.save()
+      # This is how we log a user in via code
+      login(request, user)
+      return redirect('index')
+    else:
+      error_message = 'Invalid sign up - try again'
+  # A bad POST or a GET request, so render signup.html with an empty form
+  form = UserCreationForm()
+  context = {'form': form, 'error_message': error_message}
+  return render(request, 'registration/signup.html', context)
