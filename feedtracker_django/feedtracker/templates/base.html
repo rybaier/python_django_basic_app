@@ -9,23 +9,23 @@
     <title>Equine Feed Tracker </title>
    
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+ 
 </head>
 <body>
     <header class="navbar-fixed">
         <nav>
             <div class="nav-wrapper">
                 <ul>
-                    <li><a href="{% url 'home' %}" class="left brand-logo">&nbsp;&nbsp;Equine Feed Tracker</a></li>
+                   <a href="{% url 'home' %}" class="left brand-logo"><h1>Equine Feed Tracker</h1></a>
                 </ul>
                 <ul class="right">
                     {% if user.is_authenticated %}
-                      <li><a href="{% url 'create_horse' %}">Add a Horse</a></li>
-                      <li><a href="{% url 'horse_list' %}">View All My Horses</a></li>
-                      <li><a href="{% url 'logout' %}">Log Out</a></li>
+                     <a href="{% url 'create_horse' %}">Add a Horse</a>
+                     <a href="{% url 'horse_list' %}">View All My Horses</a>
+                     <a href="{% url 'logout' %}">Log Out</a>
                     {% else %}
-                      <li><a href="{% url 'login' %}">Log In</a></li>
-                      <li><a href="{% url 'signup' %}">Sign Up</a></li>
+                     <a href="{% url 'login' %}">Log In</a>
+                     <a href="{% url 'signup' %}">Sign Up</a>
                     {% endif %}
                   </ul>
             </div>

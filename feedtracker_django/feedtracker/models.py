@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 from django.contrib.auth.models import User
 
 
@@ -19,10 +20,13 @@ class Horse(models.Model):
     markings = models.CharField(max_length=300, default='no visible markings')
     weight = models.CharField(max_length=20)
     height = models.CharField(max_length=30)
-    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='owner')
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return f'{self.name} ({self.id})'
+    
+    def get_absolute_url(self):
+        return reverse('horse_detail', kwargs={'horse_id': self.id})
 
 
 class Feeding(models.Model):
@@ -34,5 +38,8 @@ class Feeding(models.Model):
 
 
     def __str__(self):
-        return self.horse 
+        return f'{self.meal_time } {self.id}'
+    
+    def get_absolute_url(self):
+        return reverse('horse_detail', kwargs={'horse_id': self.id})
 

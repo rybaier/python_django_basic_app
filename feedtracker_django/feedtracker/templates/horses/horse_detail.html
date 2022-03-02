@@ -1,6 +1,28 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h1>Horse name here</h1>
+<h1>Horse Details</h1>
+    <div class="row">
+        <div class="col4">
+            <div class="card">
+                <span class="card-title">{{ horse.name }}</span>
+                <p> Age: {{ horse.age }}</p>
+                <p> Breed: {{ horse.breed }}</p>
+                <p> Weight: {{ horse.weight }}</p>
+                <p> Height: {{ horse.height }}</p>
+            </div>
+            <a href="{% url 'update_horse' horse.id %}"><h2>Update Horse Details</h2></a>
+            <a href="{% url 'delete_horse' horse.id %}"><h2>Delete Horse </h2></a>
+            <a href="{% url 'create_feeding' horse.id %}">Add a Feeding</a>
 
+            {% for feeding in feedings %}
+            <h3>{{ feeding.meal_time }} </h3>
+            <p>{{ feeding.hay }}</p>
+            <p>{{ feeding.alfalfa }}</p>
+            <p>{{ feeding.grain }}</p>
+            <a href="{% url 'update_feeding' feeding.id %}"> Update Feed Card</a>
+            <a href="{% url 'delete_feeding' feeding.id %}"> Delete Feed Card</a>
+            {% endfor %}
+        </div>
+    </div>
 {% endblock %}

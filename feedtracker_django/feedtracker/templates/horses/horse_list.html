@@ -1,6 +1,19 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h1>Horses</h1>
+<h1>My Horses</h1>
 
+{% for horse in horses %}
+  <div class="card">
+   
+      <div class="card-content">
+         <a href="{% url 'horse_detail' horse.id %}"><span class="card-title">{{ horse.name }}</span></a>
+        <p> Age: {{ horse.age }}</p>
+        <p> Breed: {{ horse.breed }}</p>
+        <p> Weight: {{ horse.weight }}</p>
+        <p> Height: {{ horse.height }}</p>
+       </div>
+    
+  </div>
+{% endfor %}
 {% endblock %}

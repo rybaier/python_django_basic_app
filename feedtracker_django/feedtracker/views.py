@@ -15,16 +15,20 @@ from .forms import FeedingForm, HorseForm
 def home(request):
     return render(request, 'home.html')
 
-
+# .filter(user=request.user)
 def horse_index(request):
-    horses = Horse.objects.all()
-    return render(request, 'horses/horse_list.html')
+    horses = Horse.objects.filter(user=request.user)
+    return render(request, 'horses/horse_list.html', { 'horses':horses })
     
 
 def horse_detail(request, horse_id):
     horse = Horse.objects.get(id=horse_id)
-    feedings = Feeding.objects.all()
+    feedings = Feeding.objects.filter(horse=horse)
+    return render(request, 'horses/horse_detail.html', {'horse': horse, 'feedings': feedings})
 
+def feeding_index(request):
+    feedings = Feeding.objects.all()
+    return render(request, 'feedtracker/feeding_list.html')
     
 
 def add_a_feeding(request, horse_id):
@@ -39,18 +43,25 @@ def add_a_feeding(request, horse_id):
 #class based views
 class Create_Horse(LoginRequiredMixin, CreateView):
     model = Horse
-    fields = ['name', 'age', 'breed', 'weight', 'height']
+    fields = ['name', 'age', 'breed', 'markings', 'weight', 'height']
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)
 
 class Update_Horse(LoginRequiredMixin, UpdateView):
     model = Horse
-    fields = ['name', 'age', 'breed','weight', 'height']
+    fields = ['name', 'age', 'breed', 'markings', 'weight', 'height']
 
 class Delete_Horse(LoginRequiredMixin, DeleteView):
     model = Horse
     success_url = '/horses/'
+
+class Create_Feeding(LoginRequiredMixin, CreateView):
+    model = Feeding
+    fields = '__all__'
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form), 
 
 class Update_Feeding(LoginRequiredMixin, UpdateView):
     model = Feeding
@@ -58,7 +69,7 @@ class Update_Feeding(LoginRequiredMixin, UpdateView):
     
 class Delete_Feeding(LoginRequiredMixin, DeleteView):
      model = Feeding
-     success_url = 'horse/<int:horse_id>/'
+     success_url = redirect('horse/<int:horse_id>/')
 
 
 def signup(request):
