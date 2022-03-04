@@ -69,7 +69,7 @@ class Update_Feeding(LoginRequiredMixin, UpdateView):
     
 class Delete_Feeding(LoginRequiredMixin, DeleteView):
      model = Feeding
-     success_url = redirect('horse/<int:horse_id>/')
+     success_url = 'horse/<int:horse_id>/'
 
 
 def signup(request):
